@@ -1,0 +1,22 @@
+# Environment files
+.env
+.env.*
+frontend/.env*
+backend/.env*
+
+# Dependencies
+node_modules/
+
+# Build files
+dist/
+build/
+
+# Vercel
+.vercel/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db

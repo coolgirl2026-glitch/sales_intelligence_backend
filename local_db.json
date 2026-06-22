@@ -1,0 +1,105 @@
+{
+  "companies": [
+    {
+      "id": "local-co-g5jlu0v",
+      "user_id": "878ccb45-43e2-4df3-95be-91c6e125475c",
+      "name": "the goat media",
+      "website": "https://thegoatmedia.co/",
+      "industry": "Other",
+      "size": "50-100",
+      "location": "chennai",
+      "contact_role": "Founder / CEO",
+      "known_pain": null,
+      "created_at": "2026-06-22T11:53:40.962Z",
+      "updated_at": "2026-06-22T11:53:40.962Z"
+    }
+  ],
+  "analyses": [
+    {
+      "id": "local-an-8uadztu",
+      "user_id": "878ccb45-43e2-4df3-95be-91c6e125475c",
+      "company_id": "local-co-g5jlu0v",
+      "agent": "aspire",
+      "tool": "intelligence",
+      "input_values": {
+        "size": "50-100",
+        "company": "the goat media",
+        "persona": "Founder / CEO",
+        "website": "https://thegoatmedia.co/",
+        "industry": "Other",
+        "linkedin": "https://www.linkedin.com/in/kennet-alphy-c/",
+        "location": "chennai",
+        "linkedinUrl": "https://thegoatmedia.co/",
+        "forceNewWebSearch": true
+      },
+      "output": {
+        "specialNote": "Creative agencies like The Goat Media face a critical performance paradox: their creative output depends heavily on consistent daily execution from account managers, designers, and strategists, yet most agencies lack systems to ensure these behaviors happen reliably. Without structured daily habits around client communication, project management, and quality control, even talented teams create inconsistent client experiences. The founder likely sees this gap between individual talent and team-wide performance consistency, especially as they scale beyond 50 employees where personal oversight becomes impossible.",
+        "sections": [
+          {
+            "title": "Likely Pain Points",
+            "icon": "💣",
+            "items": [
+              "Inconsistent client delivery quality across different account managers",
+              "Project managers not following up on deliverables consistently",
+              "Creative teams missing deadlines due to poor daily discipline",
+              "Account executives not maintaining regular client touchpoints",
+              "No system to ensure best practices are followed daily by all team members"
+            ]
+          },
+          {
+            "title": "Industry Insight",
+            "icon": "🏭",
+            "text": "Media agencies at 50-100 employees hit a critical scaling point where founder oversight can't ensure execution consistency. Chennai's competitive agency market means client retention depends on reliable delivery, not just creative talent."
+          },
+          {
+            "title": "Recommended Pitch Angle",
+            "icon": "🎯",
+            "text": "Focus on predictable client delivery through consistent daily execution. Position as solving the gap between creative talent and reliable performance that threatens client retention and revenue predictability."
+          },
+          {
+            "title": "Discovery Questions to Ask",
+            "icon": "❓",
+            "items": [
+              "How consistent is project delivery quality across different account teams?",
+              "What happens when your best account managers are unavailable - does execution drop?",
+              "How do you currently ensure client communication standards are maintained daily?",
+              "Do you have a system that improves team performance daily or only reviews it in retrospectives?",
+              "Where do client projects typically face execution gaps that impact satisfaction?"
+            ]
+          },
+          {
+            "title": "Personalized Outreach Draft",
+            "icon": "✉️",
+            "text": "Hi Kennet, I noticed The Goat Media is scaling in Chennai's competitive agency space. Most growing agencies face a challenge: creative talent is strong, but consistent daily execution across all client accounts becomes harder to maintain. The result? Client experience varies by which team member is involved. We help agencies like yours improve measurable performance by fixing what account managers, project leads, and creative teams do every day - ensuring your creative excellence is delivered consistently across all clients. Worth a 15-minute conversation about how this impacts client retention?",
+            "copyable": true
+          },
+          {
+            "title": "Likely Objections",
+            "icon": "🚧",
+            "items": [
+              "This is just project management software → We don't manage projects, we improve daily execution habits that drive project success",
+              "Creative work can't be systematized → We don't systematize creativity, we systematize the execution behaviors that deliver creative work reliably",
+              "We already have good processes → Processes define what to do, we ensure it actually gets done consistently every day"
+            ]
+          },
+          {
+            "title": "Recommended Positioning",
+            "icon": "⚔️",
+            "text": "Position as the system that converts agency talent into predictable client delivery. Focus on revenue protection through execution consistency rather than growth - agencies understand that one bad client experience can cost multiple referrals."
+          },
+          {
+            "title": "Recommended Next Action",
+            "icon": "🚀",
+            "text": "Send the LinkedIn message focusing on client delivery consistency. Research their recent client work or case studies to reference specific service areas in follow-up conversations."
+          }
+        ]
+      },
+      "is_starred": false,
+      "created_by_login_id": "0570a64b-c963-436e-88da-9bc31e847858",
+      "created_by_name": "vaishali",
+      "last_accessed_by_name": null,
+      "last_accessed_at": null,
+      "created_at": "2026-06-22T11:53:41.112Z"
+    }
+  ]
+}
