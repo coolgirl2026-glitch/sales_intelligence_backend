@@ -251,6 +251,13 @@ async function callOpenRouter({ apiKey, model, maxTokens, messages, responseForm
 
 // ─── Health check ─────────────────────────────────────────────────────────────
 
+app.get("/", (req, res) => {
+  res.json({
+    status: "ok",
+    message: "Sales Intelligence Backend Running"
+  });
+});
+
 app.get("/health", (req, res) => {
   res.json({
     status: "ok",
