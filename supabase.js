@@ -169,6 +169,12 @@ export async function saveAnalysis(userId, companyId, { agent, tool, inputValues
   const isUuid = (str) => /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(str);
   const safeCompanyId = (companyId && isUuid(String(companyId))) ? companyId : null;
 
+  const extendedInputValues = {
+    ...inputValues,
+    created_by_name: createdByName || null,
+    created_by_login_id: createdByLoginId || null,
+  };
+
   if (isSupabaseConfigured) {
     const client = requireSupabase();
     const fullPayload = {
@@ -176,7 +182,7 @@ export async function saveAnalysis(userId, companyId, { agent, tool, inputValues
       company_id: safeCompanyId,
       agent,
       tool,
-      input_values: inputValues,
+      input_values: extendedInputValues,
       output,
       created_by_login_id: createdByLoginId || null,
       created_by_name: createdByName || null,
@@ -199,7 +205,7 @@ export async function saveAnalysis(userId, companyId, { agent, tool, inputValues
           company_id: safeCompanyId,
           agent,
           tool,
-          input_values: inputValues,
+          input_values: extendedInputValues,
           output,
         };
         const { data: retryData, error: retryError } = await client
@@ -225,7 +231,7 @@ export async function saveAnalysis(userId, companyId, { agent, tool, inputValues
     company_id: companyId || null,
     agent,
     tool,
-    input_values: inputValues,
+    input_values: extendedInputValues,
     output,
     is_starred: false,
     created_by_login_id: createdByLoginId || null,
@@ -248,7 +254,8 @@ export async function touchAnalysisAccess(analysisId, accessedByName) {
 
   if (isSupabaseConfigured) {
     try {
-      const { error } = await requireSupabase()
+      const client = requireSupabase();
+      const { error } = await client
         .from("analyses")
         .update({
           last_accessed_by_name: accessedByName,
@@ -257,9 +264,30 @@ export async function touchAnalysisAccess(analysisId, accessedByName) {
         .eq("id", analysisId);
 
       if (error) {
-        console.error("Supabase touchAnalysisAccess error:", error.message);
+        // If columns are missing, fallback to updating input_values JSON
+        if (error.code === "42703" || error.message?.includes("last_accessed_")) {
+          const { data: record } = await client
+            .from("analyses")
+            .select("input_values")
+            .eq("id", analysisId)
+            .maybeSingle();
+
+          if (record) {
+            await client
+              .from("analyses")
+              .update({
+                input_values: {
+                  ...record.input_values,
+                  last_accessed_by_name: accessedByName,
+                  last_accessed_at: now,
+                }
+              })
+              .eq("id", analysisId);
+          }
+        } else {
+          console.error("Supabase touchAnalysisAccess error:", error.message);
+        }
       }
-      // Also update local JSON if the record exists there
     } catch (err) {
       console.error("Supabase touchAnalysisAccess exception:", err.message);
     }
@@ -300,7 +328,13 @@ export async function getUserAnalyses(userId, filters = {}) {
       const { data, error } = await query.order("created_at", { ascending: false });
 
       if (error) throw error;
-      supabaseData = data || [];
+      supabaseData = (data || []).map(item => ({
+        ...item,
+        created_by_name: item.created_by_name || item.input_values?.created_by_name || null,
+        created_by_login_id: item.created_by_login_id || item.input_values?.created_by_login_id || null,
+        last_accessed_by_name: item.last_accessed_by_name || item.input_values?.last_accessed_by_name || null,
+        last_accessed_at: item.last_accessed_at || item.input_values?.last_accessed_at || null,
+      }));
     } catch (err) {
       console.error("Supabase getUserAnalyses error, falling back to local:", err.message);
     }
@@ -323,6 +357,10 @@ export async function getUserAnalyses(userId, filters = {}) {
       const company = db.companies.find((c) => c.id === item.company_id);
       return {
         ...item,
+        created_by_name: item.created_by_name || item.input_values?.created_by_name || null,
+        created_by_login_id: item.created_by_login_id || item.input_values?.created_by_login_id || null,
+        last_accessed_by_name: item.last_accessed_by_name || item.input_values?.last_accessed_by_name || null,
+        last_accessed_at: item.last_accessed_at || item.input_values?.last_accessed_at || null,
         companies: company ? { name: company.name, industry: company.industry } : null,
       };
     });
