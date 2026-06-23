@@ -837,9 +837,16 @@ app.post("/api/generate", requireAuth(), async (req, res) => {
 
     let analysisId = null;
     if (userId && isSupabaseConfigured) {
+      let companyId = null;
       try {
         const company = await upsertCompany(userId, values);
-        const savedAnalysis = await saveAnalysis(userId, company?.id, {
+        companyId = company?.id;
+      } catch (coErr) {
+        console.error("Supabase company upsert error (non-fatal):", coErr.message);
+      }
+
+      try {
+        const savedAnalysis = await saveAnalysis(userId, companyId, {
           agent: agent.toLowerCase().includes("thriving") ? "thriving" : "aspire",
           tool,
           inputValues: values,
@@ -847,9 +854,9 @@ app.post("/api/generate", requireAuth(), async (req, res) => {
           createdByLoginId: req.user?.id || null,
           createdByName: req.user?.name || null,
         });
-        analysisId = savedAnalysis.id;
+        analysisId = savedAnalysis?.id || null;
       } catch (dbErr) {
-        console.error("Supabase save error (non-fatal):", dbErr.message);
+        console.error("Supabase save analysis error (non-fatal):", dbErr.message);
       }
     }
 

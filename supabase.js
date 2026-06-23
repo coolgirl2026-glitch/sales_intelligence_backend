@@ -166,25 +166,52 @@ export async function upsertCompany(userId, values) {
 }
 
 export async function saveAnalysis(userId, companyId, { agent, tool, inputValues, output, createdByLoginId, createdByName }) {
+  const isUuid = (str) => /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(str);
+  const safeCompanyId = (companyId && isUuid(String(companyId))) ? companyId : null;
+
   if (isSupabaseConfigured) {
+    const client = requireSupabase();
+    const fullPayload = {
+      user_id: userId,
+      company_id: safeCompanyId,
+      agent,
+      tool,
+      input_values: inputValues,
+      output,
+      created_by_login_id: createdByLoginId || null,
+      created_by_name: createdByName || null,
+    };
+
     try {
-      const { data, error } = await requireSupabase()
+      const { data, error } = await client
         .from("analyses")
-        .insert({
+        .insert(fullPayload)
+        .select()
+        .single();
+
+      if (!error) return data;
+
+      // Retry without tracking columns if they don't exist in user's table (undefined column error)
+      if (error.code === "42703" || error.message?.includes("created_by_")) {
+        console.warn("User tracking columns are missing in analyses table. Retrying insert with base payload...");
+        const basePayload = {
           user_id: userId,
-          company_id: companyId || null,
+          company_id: safeCompanyId,
           agent,
           tool,
           input_values: inputValues,
           output,
-          created_by_login_id: createdByLoginId || null,
-          created_by_name: createdByName || null,
-        })
-        .select()
-        .single();
+        };
+        const { data: retryData, error: retryError } = await client
+          .from("analyses")
+          .insert(basePayload)
+          .select()
+          .single();
 
-      if (error) throw error;
-      return data;
+        if (retryError) throw retryError;
+        return retryData;
+      }
+      throw error;
     } catch (supabaseErr) {
       console.error("Supabase saveAnalysis error, falling back to local storage:", supabaseErr.message);
     }
