@@ -57,19 +57,33 @@ const SEARCH_MAX_TOKENS = Number(process.env.OPENROUTER_SEARCH_MAX_TOKENS || 800
 
 app.use(express.json());
 
-// Allow requests from your Vite frontend on port 5173
-// Add your deployed frontend URL here later when you deploy
+// Allow requests from your Vite frontend (both local development and Vercel deployments)
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "http://localhost:5174",
-      "http://localhost:5175",
-      "http://localhost:5176",
-      "http://localhost:4173",
-      "null",
-      process.env.FRONTEND_URL, // set this in .env when you deploy
-    ].filter(Boolean),
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps, curl, or server-to-server)
+      if (!origin) return callback(null, true);
+      
+      const allowedOrigins = [
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "http://localhost:5175",
+        "http://localhost:5176",
+        "http://localhost:4173",
+        "null",
+        process.env.FRONTEND_URL,
+      ].filter(Boolean);
+
+      const isAllowed = allowedOrigins.includes(origin) || 
+                        origin.startsWith("http://localhost:") || 
+                        origin.endsWith(".vercel.app");
+
+      if (isAllowed) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     methods: ["POST", "GET", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "user-id", "Authorization"],
   })
@@ -629,8 +643,8 @@ app.post("/api/generate", requireAuth(), async (req, res) => {
     const requestId = randomUUID();
     const companyName = values.company;
 
-    const forceNewWebSearch = req.body.forceNewWebSearch !== undefined 
-      ? req.body.forceNewWebSearch 
+    const forceNewWebSearch = req.body.forceNewWebSearch !== undefined
+      ? req.body.forceNewWebSearch
       : (req.body.values?.forceNewWebSearch !== undefined ? req.body.values.forceNewWebSearch : forceRefresh);
 
     let webResearch = null;
@@ -704,7 +718,7 @@ app.post("/api/generate", requireAuth(), async (req, res) => {
       searchData = await callPerplexityWebSearch(companyName, values.website, agent, tool, values, apiKey);
 
       webResearch = searchData?.choices?.[0]?.message?.content || "No web research returned.";
-      
+
       const usage = searchData?.usage || {};
       const promptTokens = usage.prompt_tokens ?? usage.input_tokens ?? 0;
       const completionTokens = usage.completion_tokens ?? usage.output_tokens ?? 0;
@@ -840,11 +854,11 @@ app.post("/api/generate", requireAuth(), async (req, res) => {
     }
 
     // 8. Return parsed output to frontend
-    return res.status(200).json({ 
-      output: parsed, 
-      requestId, 
-      analysisId, 
-      canonicalCompany: record?.company_name || companyName 
+    return res.status(200).json({
+      output: parsed,
+      requestId,
+      analysisId,
+      canonicalCompany: record?.company_name || companyName
     });
 
   } catch (err) {
