@@ -15,7 +15,7 @@ import {
   buildDeepAuditPrompt,
 } from "./prompts/userMessages.js";
 import { logTokenUsage, normalizeUsage } from "./tokenUsage.js";
-import { compressSalesPayload } from "../graphify-layer/graphifyEngine.js";
+import { compressSalesPayload } from "./graphify-layer/graphifyEngine.js";
 import {
   isSupabaseConfigured,
   resolveOrCreateUser,
