@@ -142,6 +142,10 @@ do about it?"
 SECTION 7 — OBJECTION HANDLING
 ════════════════════════════════════════
 
+"This is soft / not measurable"
+→ "Performance is tracked daily. AI validates completion. Managers confirm
+impact. We correlate habit consistency to actual performance metrics."
+
 "We already do surveys"
 → "That's great — you already know what people are saying. We help you
 understand why it's happening and exactly what to do next."

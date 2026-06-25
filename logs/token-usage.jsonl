@@ -1,1 +1,4 @@
 {"timestamp":"2026-06-22T11:53:40.457Z","company":"the goat media","strategy":"Live Search","perplexity":{"tokensUsed":739,"costINR":0.546755},"claude":{"tokensUsed":4226,"costINR":2.144147}}
+{"timestamp":"2026-06-24T07:59:32.306Z","company":"Test Company","strategy":"Cached Analysis Only","perplexity":{"tokensUsed":0,"costINR":0},"claude":{"tokensUsed":3988,"costINR":2.050973}}
+{"timestamp":"2026-06-24T08:00:02.671Z","company":"Test Company","strategy":"Forensic Audit","perplexity":{"tokensUsed":0,"costINR":0},"claude":{"tokensUsed":1859,"costINR":0.801125}}
+{"timestamp":"2026-06-24T09:24:31.288Z","company":"tvs next","strategy":"Live Search","perplexity":{"tokensUsed":727,"costINR":0.545611},"claude":{"tokensUsed":4376,"costINR":2.336783}}

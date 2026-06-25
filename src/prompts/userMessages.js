@@ -396,4 +396,3 @@ export function buildDeepAuditPrompt(companyName, website, userInputData, genera
     "verdictText": "A crisp, 2-sentence executive assessment summarizing why this data can or cannot be completely trusted in front of a client."
   }`;
 }
-

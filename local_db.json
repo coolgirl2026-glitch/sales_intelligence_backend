@@ -12,6 +12,32 @@
       "known_pain": null,
       "created_at": "2026-06-22T11:53:40.962Z",
       "updated_at": "2026-06-22T11:53:40.962Z"
+    },
+    {
+      "id": "local-co-7issa3e",
+      "user_id": "878ccb45-43e2-4df3-95be-91c6e125475c",
+      "name": "Test Company",
+      "website": "https://example.com",
+      "industry": null,
+      "size": null,
+      "location": null,
+      "contact_role": null,
+      "known_pain": null,
+      "created_at": "2026-06-24T07:59:32.875Z",
+      "updated_at": "2026-06-24T07:59:32.875Z"
+    },
+    {
+      "id": "local-co-fwevbff",
+      "user_id": "878ccb45-43e2-4df3-95be-91c6e125475c",
+      "name": "tvs next",
+      "website": "https://tvsnext.com/",
+      "industry": "SaaS / IT",
+      "size": "300-600",
+      "location": "chennai",
+      "contact_role": "CHRO / HR Head",
+      "known_pain": "unknown",
+      "created_at": "2026-06-24T09:24:32.167Z",
+      "updated_at": "2026-06-24T09:24:32.167Z"
     }
   ],
   "analyses": [

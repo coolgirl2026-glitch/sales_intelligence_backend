@@ -1,12 +1,12 @@
 import { mkdir, appendFile } from "node:fs/promises";
 import path from "node:path";
+import { isVercel } from "../config/env.js";
 
 const LOG_DIR = path.resolve("logs");
 const LOG_FILE = path.join(LOG_DIR, "token-usage.jsonl");
 
 export async function logTokenUsage(entry) {
   try {
-    const isVercel = process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME;
     const targetDir = isVercel ? "/tmp" : LOG_DIR;
     const targetFile = isVercel ? path.join("/tmp", "token-usage.jsonl") : LOG_FILE;
     
@@ -25,4 +25,3 @@ export function normalizeUsage(usage = {}) {
     raw: usage,
   };
 }
-

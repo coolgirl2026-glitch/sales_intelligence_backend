@@ -2,11 +2,11 @@
   "name": "sales-copilot-backend",
   "version": "1.0.0",
   "description": "Backend API server for Sales Copilot",
-  "main": "server.js",
+  "main": "src/main.js",
   "type": "module",
   "scripts": {
-    "dev": "node --watch server.js",
-    "start": "node server.js"
+    "dev": "node --watch src/main.js",
+    "start": "node src/main.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.107.0",

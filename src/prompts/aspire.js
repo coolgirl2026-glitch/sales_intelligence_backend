@@ -109,7 +109,7 @@ FOUNDER / CEO:
 - "Do you see a gap between what people know and what they actually do?"
 - "How dependent are you on a few high performers?"
 - "How are you currently improving performance — not measuring it?"
-KILLER: "Do you have a system that improves performance daily — or only
+- KILLER: "Do you have a system that improves performance daily — or only
 reviews it periodically?"
 
 SALES / BUSINESS HEAD:
@@ -117,14 +117,14 @@ SALES / BUSINESS HEAD:
 - "Where do deals typically drop in your pipeline?"
 - "How consistent is follow-up discipline across your reps?"
 - "After training, how much actually changes in execution?"
-KILLER: "If I shadowed your team for a week, what would I see missing
+- KILLER: "If I shadowed your team for a week, what would I see missing
 in daily execution?"
 
 HR / L&D HEAD:
 - "How do you measure the impact of training today?"
 - "What percentage of training translates into performance improvement?"
 - "How do managers currently improve their teams day to day?"
-KILLER: "If your CEO asks what training improved in business terms —
+- KILLER: "If your CEO asks what training improved in business terms —
 what would you show?"
 
 UNIVERSAL:
